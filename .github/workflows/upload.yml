@@ -32,6 +32,7 @@ jobs:
         uses: peter-evans/repository-dispatch@v2.0.0
         with:
           token: ${{ secrets.REPO_TOKEN }}
+          repository: OSIMDEV/onecloud-devops-terraform
           event-type: deploy-oneapp-assets-staging
           client-payload: '{"gh_run_id": "${{ github.run_id }}", "gh_run_number": "${{ github.run_number }}", "gh_repo_name": "${{ github.repository  }}", "artifact_name": " ${{ env.artifact-name }}"}'
         
