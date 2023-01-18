@@ -14,24 +14,26 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    env:
+      artifact-name: test
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: |
-          echo ${{ github.run_id }}
-          echo ${{ github.run_number }}
-
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: test
+          name: ${{ env.artifact-name }}
           path: ./upload
           retention-days: 30
+
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v2.0.0
+        with:
+          token: ${{ secrets.REPO_TOKEN }}
+          event-type: deploy-oneapp-assets-staging
+          client-payload: '{"gh_run_id": "${{ github.run_id }}", "gh_run_number": "${{ github.run_number }}", "gh_repo_name": "${{ github.repository  }}", "artifact_name": " ${{ env.artifact-name }}"}'
         
         
         
