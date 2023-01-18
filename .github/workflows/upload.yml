@@ -24,8 +24,7 @@ jobs:
       - name: Run a one-line script
         run: echo ${{ github.run_id }}
 
-      - name: Upload artifact if needed
-        if: ${{ fromJson(env.artifact) != null }}
+      - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: test
