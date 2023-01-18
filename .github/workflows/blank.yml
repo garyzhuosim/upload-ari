@@ -4,11 +4,6 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -29,3 +24,20 @@ jobs:
       - name: Run a one-line script
         run: echo ${{ github.run_id }}
 
+      - name: Upload artifact if needed
+        if: ${{ fromJson(env.artifact) != null }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: test
+          path: ./upload
+          retention-days: 30
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
